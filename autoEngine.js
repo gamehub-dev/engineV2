@@ -205,6 +205,13 @@ function AllowPlayerMovement() {
 function AllowImgMovement() {
     if (engine.playerMovement) {
         engineCollision()
+        if (engineBlocks.length >= 0){
+            engineCollision()
+            for (let i = 0; i < engineBlocks.length; i++){
+                ctx.fillStyle = engine.blockColor;
+                ctx.fillRect(engineBlocks.at(i).x, engineBlocks.at(i).y, engineBlocks.at(i).w, engineBlocks.at(i).h);
+            }
+        }
         enginePlayer.x += enginePlayer.vxl
         enginePlayer.x += enginePlayer.vxr
         enginePlayer.y += enginePlayer.vy
