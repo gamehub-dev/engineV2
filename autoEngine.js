@@ -170,7 +170,7 @@ function engineCollision() {
         // when colliding with top face of cube
         if (enginePlayer.y + enginePlayer.h >= engineBlocks.at(i).y && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).h - 30 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w) { enginePlayer.y = engineBlocks.at(i).y - engineBlocks.at(i).h; if (enginePlayer.g && engine.gravity) { enginePlayer.vy = 0 }; enginePlayer.g = true, standingOnTop = true } else if (!enginePlayer.standingOnBorder && !standingOnTop) { enginePlayer.g = false };
         // when colliding with bottom face of cube
-        if (enginePlayer.y <= engineBlocks.at(i).y + engineBlocks.at(i).h && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y + 10 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w) { enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).h - 10; if (engine.gravity){enginePlayer.vy += 5 }else{enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).h}};
+        if (enginePlayer.y <= engineBlocks.at(i).y + engineBlocks.at(i).h && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y + 10 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w) { enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).h - 10; if (engine.gravity){enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).h ,enginePlayer.vy = enginePlayer.mass }else{enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).h}};
     };
 };
 
