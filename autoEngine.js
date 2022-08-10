@@ -198,7 +198,7 @@ function AllowPlayerMovement() {
         }
         ctx.fillStyle = enginePlayer.c
         ctx.fillRect(enginePlayer.x, enginePlayer.y, enginePlayer.w, enginePlayer.h)
-        if (engineBlocks >= 1){
+        if (engineBlocks.length >= 0){
             for (let i = 0; i < engineBlocks.length; i++){
                 ctx.fillStyle = engine.blockColor;
                 ctx.fillRect(engineBlocks.at(i).x, engineBlocks.at(i).y, engineBlocks.at(i).w, engineBlocks.at(i).h);
