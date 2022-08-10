@@ -162,7 +162,7 @@ function engineBorderCol() {
 };
 
 function engineCollision() {
-    if (imgMovement){
+    if (!imgMovement){
         let standingOnTop = false;
         for (let i = 0; i < engineBlocks.length; i++) {
             // when colliding with left face of cube
