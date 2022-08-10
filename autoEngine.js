@@ -72,7 +72,7 @@ let border = new CanvasBorder(3, 'black')
 
 
 class Engine {
-    constructor(p, g, b, bc, ox, oy, o, rc, c, is, tb, tt, tl, tr, bw, bbc, i, ubc, bcc) {
+    constructor(p, g, b, bc, ox, oy, o, rc, c, is, tb, tt, tl, tr, bw, bbc, i, bcc) {
         this.playerMovement = p;
         this.gravity = g;
         this.borderWalls = b;
@@ -90,11 +90,10 @@ class Engine {
         this.borderWidth = bw;
         this.borderColor = bbc;
         this.i = i;
-        this.usingBlockCollision = ubc
         this.blockColor = bcc;
     }
 }
-let engine = new Engine(false, false, false, false, false, false, false, false, false, '', 0, 0, 0, 0, 2, 'black', 0, false, 'black')
+let engine = new Engine(false, false, false, false, false, false, false, false, false, '', 0, 0, 0, 0, 2, 'black', 0, 'black')
 
 // end of classes
 
@@ -161,19 +160,17 @@ function engineBorderCol() {
     }else{enginePlayer.standingOnBorder = false};
 };
 
-function engineCollision(){
-    if (engine.usingBlockCollision){
-        let standingOnTop = false;
-        for (let i = 0; i < engineBlocks.length; i++){
-            // when colliding with left face of cube
-            if (enginePlayer.x + enginePlayer.w >= engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).width - 30 && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y + 30 && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).height - 30){enginePlayer.x = engineBlocks.at(i).x - engineBlocks.at(i).width};
-            // when colliding with right face of cube
-            if (enginePlayer.x <= engineBlocks.at(i).x + engineBlocks.at(i).width && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y + 30 && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).height - 30){enginePlayer.x = engineBlocks.at(i).x + engineBlocks.at(i).width};
-            // when colliding with top face of cube
-            if (enginePlayer.y + enginePlayer.h >= engineBlocks.at(i).y - 10 && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).height - 30 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).width){enginePlayer.y = engineBlocks.at(i).y - engineBlocks.at(i).height - 10, enginePlayer.g = true, enginePlayer.vy = 0, standingOnTop = true}else if (!enginePlayer.standingOnBorder && !standingOnTop){enginePlayer.g = false};
-            // when colliding with bottom face of cube
-            if (enginePlayer.y <= engineBlocks.at(i).y + engineBlocks.at(i).height && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y + 10 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).width){enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).height - 10, enginePlayer.vy += 5};
-        };
+function engineCollision() {
+    let standingOnTop = false;
+    for (let i = 0; i < engineBlocks.length; i++) {
+        // when colliding with left face of cube
+        if (enginePlayer.x + enginePlayer.w >= engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w - 30 && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y + 30 && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).h - 30) { enginePlayer.x = engineBlocks.at(i).x - engineBlocks.at(i).w };
+        // when colliding with right face of cube
+        if (enginePlayer.x <= engineBlocks.at(i).x + engineBlocks.at(i).w && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y + 30 && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).h - 30) { enginePlayer.x = engineBlocks.at(i).x + engineBlocks.at(i).w };
+        // when colliding with top face of cube
+        if (enginePlayer.y + enginePlayer.h >= engineBlocks.at(i).y && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).h - 30 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w) { enginePlayer.y = engineBlocks.at(i).y - engineBlocks.at(i).h; if (enginePlayer.g) { enginePlayer.vy = 0 }; enginePlayer.g = true, standingOnTop = true } else if (!enginePlayer.standingOnBorder && !standingOnTop) { enginePlayer.g = false };
+        // when colliding with bottom face of cube
+        if (enginePlayer.y <= engineBlocks.at(i).y + engineBlocks.at(i).h && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y + 10 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w) { enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).h - 10, enginePlayer.vy += 5 };
     };
 };
 
@@ -193,17 +190,15 @@ function AllowPlayerMovement() {
         if (engine.borderCollision) {
             engineBorderCol()
         }
-        if (engine.collision) {
-            collision()
-        }
-        ctx.fillStyle = enginePlayer.c
-        ctx.fillRect(enginePlayer.x, enginePlayer.y, enginePlayer.w, enginePlayer.h)
         if (engineBlocks.length >= 0){
+            engineCollision()
             for (let i = 0; i < engineBlocks.length; i++){
                 ctx.fillStyle = engine.blockColor;
                 ctx.fillRect(engineBlocks.at(i).x, engineBlocks.at(i).y, engineBlocks.at(i).w, engineBlocks.at(i).h);
             }
         }
+        ctx.fillStyle = enginePlayer.c
+        ctx.fillRect(enginePlayer.x, enginePlayer.y, enginePlayer.w, enginePlayer.h)
     }
     anim(AllowPlayerMovement)
 }
@@ -215,9 +210,6 @@ function AllowImgMovement() {
         enginePlayer.y += enginePlayer.vy
         if (engine.borderCollision) {
             engineBorderCol()
-        }
-        if (engine.collision) {
-            collision()
         }
         if (engine.imgID != ''){
         doc.getElementById(engine.imgID).style.left = enginePlayer.x + 'px'
