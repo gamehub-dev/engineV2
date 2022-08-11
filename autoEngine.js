@@ -366,6 +366,19 @@ function contains(stringOrVar, Includes) {
         return false;
     }
 }
+function randomColor(){
+    let x = random(10, 1);
+    if (x == '1'){return 'blue'};
+    if (x == '2'){return 'purple'};
+    if (x == '3'){return 'orange'};
+    if (x == '4'){return 'green'};
+    if (x == '5'){return 'cyan'};
+    if (x == '6'){return 'red'};
+    if (x == '7'){return 'brown'};
+    if (x == '8'){return 'black'};
+    if (x == '9'){return 'gray'};
+    if (x == '10'){return 'yellow'};
+}
 canvas.width = width - 30;
 canvas.height = height - 30;
 cl("autoEngine.js Loaded Succesfully");
