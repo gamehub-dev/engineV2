@@ -32,7 +32,7 @@
 
 // classes
 class Engine_Player {
-    constructor(x, y, vy, vxl, vxr, w, h, s, j, f, g, c, i, sob) {
+    constructor(x, y, vy, vxl, vxr, w, h, s, j, f, g, c, i, sob, jumping) {
         this.x = x;
         this.y = y;
         this.vy = vy;
@@ -47,9 +47,10 @@ class Engine_Player {
         this.c = c;
         this.img = i;
         this.standingOnBorder = sob;
+        this.jumping = jumping;
     }
 }
-let enginePlayer = new Engine_Player(100, 100, 0, 0, 0, 50, 50, 5, 15, 0.2, false, "black", false, false);
+let enginePlayer = new Engine_Player(100, 100, 0, 0, 0, 50, 50, 5, 15, 0.2, false, "black", false, false, false);
 
 
 class CalcDistanceX {
@@ -166,7 +167,7 @@ function engineCollision() {
             let standingOnTop = false;
             for (let i = 0; i < engineBlocks.length; i++) {
                 // when colliding with top face of cube
-                if (enginePlayer.y + enginePlayer.h >= engineBlocks.at(i).y && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).h - 10 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x + 10 && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w - 10) { enginePlayer.y = engineBlocks.at(i).y - enginePlayer.h; if (!jumping) { enginePlayer.vy = 0 }; enginePlayer.g = true, standingOnTop = true } else if (!enginePlayer.standingOnBorder && !standingOnTop) { enginePlayer.g = false };
+                if (enginePlayer.y + enginePlayer.h >= engineBlocks.at(i).y && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).h - 10 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x + 10 && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w - 10) { enginePlayer.y = engineBlocks.at(i).y - enginePlayer.h; if (!enginePlayer.jumping) { enginePlayer.vy = 0 }; enginePlayer.g = true, standingOnTop = true } else if (!enginePlayer.standingOnBorder && !standingOnTop) { enginePlayer.g = false };
                 // when colliding with left face of cube
                 if (enginePlayer.x + enginePlayer.w >= engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w - 10 && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).h - 10) { enginePlayer.x = engineBlocks.at(i).x - enginePlayer.w};
                 // when colliding with right face of cube
@@ -245,7 +246,7 @@ listen("keydown", function (e) {
     if (engine.playerMovement) {
         if (engine.gravity) {
             if (enginePlayer.g) {
-                if (e.code == 'KeyW') enginePlayer.vy = -enginePlayer.jumpSpeed, enginePlayer.g = false;
+                if (e.code == 'KeyW') enginePlayer.vy = -enginePlayer.jumpSpeed, enginePlayer.g = false, enginePlayer.jumping = true;
             }
             if (e.code == 'KeyD') enginePlayer.vxr = enginePlayer.speed;
             if (e.code == 'KeyA') enginePlayer.vxl = -enginePlayer.speed;
@@ -265,6 +266,7 @@ listen("keyup", function (e) {
 listen("keyup", function (e) {
     if (engine.playerMovement) {
         if (engine.gravity) {
+            if (e.code == 'KeyW') enginePlayer.jumping = false;
             if (e.code == 'KeyD') enginePlayer.vxr = 0;
             if (e.code == 'KeyA') enginePlayer.vxl = 0;
         }
