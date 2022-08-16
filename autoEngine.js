@@ -197,8 +197,10 @@ function AllowPlayerMovement() {
         if (engineBlocks.length >= 0){
             engineCollision()
             for (let i = 0; i < engineBlocks.length; i++){
-                ctx.fillStyle = engine.blockColor;
-                ctx.fillRect(engineBlocks.at(i).x, engineBlocks.at(i).y, engineBlocks.at(i).w, engineBlocks.at(i).h);
+                if (engineBlocks.at(i).color != undefined){ ctx.fillStyle = engineBlocks.at(i).color; }else{
+                    ctx.fillStyle = 'black'
+                    ctx.fillRect(engineBlocks.at(i).x, engineBlocks.at(i).y, engineBlocks.at(i).w, engineBlocks.at(i).h);
+                }
             }
         }
         ctx.fillStyle = enginePlayer.c
