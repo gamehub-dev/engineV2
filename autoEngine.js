@@ -73,7 +73,7 @@ let border = new CanvasBorder(3, 'black')
 
 
 class Engine {
-    constructor(p, g, b, bc, ox, oy, o, rc, c, is, tb, tt, tl, tr, bw, bbc, i, bcc) {
+    constructor(p, g, b, bc, ox, oy, o, rc, c, is, tb, tt, tl, tr, bw, bbc, i, bcc, up) {
         this.playerMovement = p;
         this.gravity = g;
         this.borderWalls = b;
@@ -92,9 +92,10 @@ class Engine {
         this.borderColor = bbc;
         this.i = i;
         this.blockColor = bcc;
+        this.ownFunction = up
     }
 }
-let engine = new Engine(false, false, false, false, false, false, false, false, false, '', 0, 0, 0, 0, 2, 'black', 0, 'black')
+let engine = new Engine(false, false, false, false, false, false, false, false, false, '', 0, 0, 0, 0, 2, 'black', 0, 'black', false)
 
 // end of classes
 
@@ -186,7 +187,9 @@ function engineCollision() {
 // player movement
 function AllowPlayerMovement() {
     if (engine.playerMovement) {
+        if (!engine.ownFunction){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }else{ update() };
         engineCollision()
         enginePlayer.x += enginePlayer.vxl
         enginePlayer.x += enginePlayer.vxr
