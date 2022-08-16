@@ -189,7 +189,7 @@ function AllowPlayerMovement() {
     if (engine.playerMovement) {
         if (!engine.ownFunction){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }else{ update() };
+        }
         engineCollision()
         enginePlayer.x += enginePlayer.vxl
         enginePlayer.x += enginePlayer.vxr
