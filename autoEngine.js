@@ -174,7 +174,7 @@ function engineCollision() {
         // when colliding with right face of cube
         if (enginePlayer.x <= engineBlocks.at(i).x + engineBlocks.at(i).w && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.y + 40 > engineBlocks.at(i).y && enginePlayer.y < engineBlocks.at(i).y + engineBlocks.at(i).h - 10) { enginePlayer.x = engineBlocks.at(i).x + engineBlocks.at(i).w };
         // when colliding with bottom face of cube
-        if (enginePlayer.y <= engineBlocks.at(i).y + engineBlocks.at(i).h + 5 && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y + 10 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w) { enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).h + 5; if (engine.gravity){enginePlayer.vy = 0, enginePlayer.vy += enginePlayer.mass }else{enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).h}};
+        if (enginePlayer.y <= engineBlocks.at(i).y + engineBlocks.at(i).h && enginePlayer.y + enginePlayer.h > engineBlocks.at(i).y + 10 && enginePlayer.x + enginePlayer.w > engineBlocks.at(i).x && enginePlayer.x < engineBlocks.at(i).x + engineBlocks.at(i).w) { enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).h; if (engine.gravity){enginePlayer.vy = 0, enginePlayer.vy += enginePlayer.mass }else{enginePlayer.y = engineBlocks.at(i).y + engineBlocks.at(i).h}};
             };
         };
     };
